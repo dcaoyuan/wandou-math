@@ -17,7 +17,7 @@ object Build extends sbt.Build {
     //.settings(defaultOsgiSettings: _*)
     .settings(basicSettings: _*)
     .settings(formatSettings: _*)
-    //.settings(releaseSettings: _*)
+    .settings(releaseSettings: _*)
     .settings(bintrayPublishSettings ++ sbtBintraySettings: _*)
     .settings(libraryDependencies ++= (Dependencies.all ++ Seq("org.scala-lang" % "scala-reflect" % scalaVersion.value)))
 
@@ -26,7 +26,7 @@ object Build extends sbt.Build {
     //.settings(defaultOsgiSettings: _*)
     .settings(basicSettings: _*)
     .settings(formatSettings: _*)
-    //.settings(releaseSettings: _*)
+    .settings(releaseSettings: _*)
     .settings(bintrayPublishSettings ++ sbtBintraySettings: _*)
     .settings(libraryDependencies ++= Dependencies.all)
 
@@ -35,7 +35,7 @@ object Build extends sbt.Build {
     //.settings(defaultOsgiSettings: _*)
     .settings(basicSettings: _*)
     .settings(formatSettings: _*)
-    //.settings(releaseSettings: _*)
+    .settings(releaseSettings: _*)
     .settings(bintrayPublishSettings ++ sbtBintraySettings: _*)
     .settings(libraryDependencies ++= Dependencies.all)
 
