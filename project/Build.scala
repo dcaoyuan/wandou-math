@@ -1,6 +1,5 @@
 import sbt._
 import sbt.Keys._
-import bintray.Plugin._
 import com.typesafe.sbt.SbtScalariform
 import com.typesafe.sbt.SbtScalariform.ScalariformKeys
 import com.typesafe.sbt.osgi.SbtOsgi._
@@ -18,7 +17,6 @@ object Build extends sbt.Build {
     .settings(basicSettings: _*)
     .settings(formatSettings: _*)
     .settings(releaseSettings: _*)
-    .settings(bintrayPublishSettings ++ sbtBintraySettings: _*)
     .settings(libraryDependencies ++= (Dependencies.all ++ Seq("org.scala-lang" % "scala-reflect" % scalaVersion.value)))
 
   lazy val wandou_math = Project("wandou-math", file("wandou-math"))
@@ -27,7 +25,6 @@ object Build extends sbt.Build {
     .settings(basicSettings: _*)
     .settings(formatSettings: _*)
     .settings(releaseSettings: _*)
-    .settings(bintrayPublishSettings ++ sbtBintraySettings: _*)
     .settings(libraryDependencies ++= Dependencies.all)
 
   lazy val wandou_indicator = Project("wandou-indicator", file("wandou-indicator"))
@@ -36,7 +33,6 @@ object Build extends sbt.Build {
     .settings(basicSettings: _*)
     .settings(formatSettings: _*)
     .settings(releaseSettings: _*)
-    .settings(bintrayPublishSettings ++ sbtBintraySettings: _*)
     .settings(libraryDependencies ++= Dependencies.all)
 
 
@@ -71,13 +67,6 @@ object Build extends sbt.Build {
     // required until these tickets are closed https://github.com/sbt/sbt-pgp/issues/42,
     // https://github.com/sbt/sbt-pgp/issues/36
     publishTo := None)
-
-  lazy val sbtBintraySettings = Seq(
-    licenses += ("Apache License 2.0", url("http://www.apache.org/licenses/")),
-    publishMavenStyle := true,
-    pomExtra := pomXml,
-    bintray.Keys.repository in bintray.Keys.bintray := "snapshots",
-    publishArtifact in Test := false)
 
   lazy val pomXml = (<url>https://github.com/wandoulabs/wandou-math</url>
       <licenses>
