@@ -3,13 +3,12 @@ scala:
 - 2.11.4
 jdk:
 - openjdk7
-before_script: sh travis/before_script.sh
 script:
 - sbt ++$TRAVIS_SCALA_VERSION clean compile test:compile
 - sbt ++$TRAVIS_SCALA_VERSION test
 after_success:
 - |
-  test "${TRAVIS_PULL_REQUEST}" = 'false' && test "${TRAVIS_JDK_VERSION}" = 'openjdk7' && sbt 'set resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"' ++${TRAVIS_SCALA_VERSION} '+ publish'
+    test "${TRAVIS_PULL_REQUEST}" = 'false' && test "${TRAVIS_JDK_VERSION}" = 'openjdk7' && sbt 'project wandou-util' 'set resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"' 'set credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASS"))' ++${TRAVIS_SCALA_VERSION} '+ publish' && sbt 'project wandou-math' 'set resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"' 'set credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASS"))' ++${TRAVIS_SCALA_VERSION} '+ publish' && sbt 'project wandou-indicator' 'set resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"' 'set credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASS"))' ++${TRAVIS_SCALA_VERSION} '+ publish'
 branches:
   only:
   - master
