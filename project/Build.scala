@@ -104,7 +104,7 @@ object Build extends sbt.Build {
 }
 
 object Dependencies {
-  val AKKA_VERSION = "2.3.7"
+  val AKKA_VERSION = "2.3.8"
 
   val scala_xml = "org.scala-lang.modules" %% "scala-xml" % "1.0.2"
   val akka_actor = "com.typesafe.akka" %% "akka-actor" % AKKA_VERSION
