@@ -4,18 +4,18 @@ scala:
 jdk:
 - openjdk7
 script:
-- sbt ++$TRAVIS_SCALA_VERSION compile test:compile
+- sbt ++$TRAVIS_SCALA_VERSION clean compile test:compile
 - sbt ++$TRAVIS_SCALA_VERSION test
 after_success:
 - |
-  test "${TRAVIS_PULL_REQUEST}" = 'false' && test "${TRAVIS_JDK_VERSION}" = 'openjdk7' && sbt 'set resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"' 'set credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASS"))' ++${TRAVIS_SCALA_VERSION} '+ publish'
+    test "${TRAVIS_PULL_REQUEST}" = 'false' && test "${TRAVIS_JDK_VERSION}" = 'openjdk7' && sbt 'project wandou-util' 'set resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"' 'set credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASS"))' ++${TRAVIS_SCALA_VERSION} '+ publish' && sbt 'project wandou-math' 'set resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"' 'set credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASS"))' ++${TRAVIS_SCALA_VERSION} '+ publish' && sbt 'project wandou-indicator' 'set resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"' 'set credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", System.getenv("SONATYPE_USER"), System.getenv("SONATYPE_PASS"))' ++${TRAVIS_SCALA_VERSION} '+ publish'
 branches:
   only:
   - master
 env:
   global:
-  - secure: B9FRT9DQb3jdlJ9IP14M+Vt5CNK2lZvz1NCwJ7oLVL+DN3MKCmhv/TJftXo0DfwEy9XId/AucFf3GMOfjTR7lTozGRqV8RP9vOGuCCv3cqee/NblrKI1Iq2SZ234TVN8kliJU+Whu4pTXyIYBoBL+ZxzxjXXdCnMWsgWgelcNck=
-  - secure: hTb8TYFsAGwI0qlNHesGEMrAZz7YotILfsO4/UT890H2i4ZoGY94BybuuQ7KZKajlGTRoJ9llNXzip/9PDI6s9tTVfvQWx7hhSsbRcnXceQWxqMetK1V0IUFHo40WI1YvdO7BkVI1HofKCMHkkwNYkrEy5bPhuuYktY+BrRGGR8=
+  - secure: XTMpQhzwum2Ntw5qJRxVClHs/xntjwjKNmVHzHS/ZAHqSBny99uSWnBihuu5oHwyPAHzlBmmkAHMzVoedeYx3Rnqq0aXW42GA/eEvMIa2lZE0aTD5WW136Ui5rpNxHKgtpkmbUCU6dh/htiZKPQXlBBsgX4lLdqDAxg5LOHY0gM=
+  - secure: i3s97N4r0mTkgqJR/JY1lsSSSEjrQkfb60q+cuBZJcDdkHC+OHSE9r+JZ37pKsMGmHwQ/PeC5u9oplzSb6ISNDmMbfaozq7J0NOF9Ku5S6SFlkgQBt6DBPa+eR+WsQ2pxIUdfaXDdlOiCm7Ab4FYQU0U3I0GJJXki44jgK58piw=
 notifications:
   email:
   - dcaoyuan@wandoujia.com
