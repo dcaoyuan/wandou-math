@@ -495,19 +495,22 @@ abstract class AbstractArrayList[A](_elementClass: Option[Class[A]])(implicit va
    * @param len     len of elements to be copied
    */
   def sliceToArray(start: Int, len: Int): Array[A] = {
-    val xs = makeArray(len)
-
     val len1 = math.min(len, size0 - start)
-    val srcStart1 = trueIdx(start)
-    val nBehindCursor = size0 - srcStart1
-    if (nBehindCursor >= len1) {
-      scala.compat.Platform.arraycopy(array, srcStart1, xs, 0, len1)
-    } else {
-      scala.compat.Platform.arraycopy(array, srcStart1, xs, 0, nBehindCursor)
-      scala.compat.Platform.arraycopy(array, 0, xs, nBehindCursor, len1 - nBehindCursor)
-    }
+    if (len1 > 0) {
+      val xs = makeArray(len)
+      val srcStart1 = trueIdx(start)
+      val nBehindCursor = size0 - srcStart1
+      if (nBehindCursor >= len1) {
+        scala.compat.Platform.arraycopy(array, srcStart1, xs, 0, len1)
+      } else {
+        scala.compat.Platform.arraycopy(array, srcStart1, xs, 0, nBehindCursor)
+        scala.compat.Platform.arraycopy(array, 0, xs, nBehindCursor, len1 - nBehindCursor)
+      }
 
-    xs
+      xs
+    } else {
+      Array()
+    }
   }
 
   // --- overrided methods for performance

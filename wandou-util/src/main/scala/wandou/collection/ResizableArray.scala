@@ -122,13 +122,15 @@ trait ResizableArray[A] extends IndexedSeq[A]
    */
   override def copyToArray[B >: A](xs: Array[B], start: Int, len: Int) {
     val len1 = math.min(math.min(len, xs.length - start), size)
-    val srcStart1 = trueIdx(0)
-    val nBehindCursor = size0 - srcStart1
-    if (nBehindCursor >= len1) {
-      scala.compat.Platform.arraycopy(array, srcStart1, xs, start, len1)
-    } else {
-      scala.compat.Platform.arraycopy(array, srcStart1, xs, start, nBehindCursor)
-      scala.compat.Platform.arraycopy(array, 0, xs, start + nBehindCursor, len1 - nBehindCursor)
+    if (len1 > 0) {
+      val srcStart1 = trueIdx(0)
+      val nBehindCursor = size0 - srcStart1
+      if (nBehindCursor >= len1) {
+        scala.compat.Platform.arraycopy(array, srcStart1, xs, start, len1)
+      } else {
+        scala.compat.Platform.arraycopy(array, srcStart1, xs, start, nBehindCursor)
+        scala.compat.Platform.arraycopy(array, 0, xs, start + nBehindCursor, len1 - nBehindCursor)
+      }
     }
   }
 
