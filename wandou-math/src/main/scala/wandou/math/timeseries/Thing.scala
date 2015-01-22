@@ -8,7 +8,7 @@ import wandou.actors.Publisher
  *
  * @author Caoyuan Deng
  */
-trait Thing extends Actor with Publisher { _: Actor =>
+trait Thing extends Actor with Publisher {
 
   def identifier: String
 
