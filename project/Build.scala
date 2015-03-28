@@ -40,7 +40,7 @@ object Build extends sbt.Build {
   lazy val basicSettings = Seq(
     organization := "com.wandoulabs.math",
     version := "0.1.1-SNAPSHOT",
-    scalaVersion := "2.11.5",
+    scalaVersion := "2.11.6",
     scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
     resolvers ++= Seq(
       "typesafe repo" at "http://repo.typesafe.com/typesafe/releases/",
@@ -104,15 +104,15 @@ object Build extends sbt.Build {
 }
 
 object Dependencies {
-  val AKKA_VERSION = "2.3.8"
+  val AKKA_VERSION = "2.3.9"
 
-  val scala_xml = "org.scala-lang.modules" %% "scala-xml" % "1.0.2"
+  val scala_xml = "org.scala-lang.modules" %% "scala-xml" % "1.0.3"
   val akka_actor = "com.typesafe.akka" %% "akka-actor" % AKKA_VERSION
   val akka_contrib = "com.typesafe.akka" %% "akka-contrib" % AKKA_VERSION
-  val akka_testkit = "com.typesafe.akka" %% "akka-testkit" % AKKA_VERSION % "test"
-  val scalatest = "org.scalatest" %% "scalatest" % "2.1.3" % "test"
-  val specs2 = "org.specs2" %% "specs2" % "2.3.11" % "test"
+  val akka_testkit = "com.typesafe.akka" %% "akka-testkit" % AKKA_VERSION % Test
+  val scalatest = "org.scalatest" %% "scalatest" % "2.2.4" % Test
+  val scalaspecs = "org.specs2" %% "specs2-core" % "2.3.13" % Test
 
-  val all = Seq(scala_xml, akka_actor, akka_contrib, scalatest, akka_testkit, specs2)
+  val all = Seq(scala_xml, akka_actor, akka_contrib, scalatest, scalaspecs, akka_testkit)
 
 }
