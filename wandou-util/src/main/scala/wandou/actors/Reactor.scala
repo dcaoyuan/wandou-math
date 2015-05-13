@@ -37,25 +37,18 @@ trait Reactor extends Publishablity {
    * All reactions of this reactor.
    */
   protected val reactions: Reactions = new Reactions(createLog)
-
-  private lazy val underlyingActor = {
-    val ref = context.actorOf(Reactor.UnderlyingActor.props(reactions))
-    context watch ref
-    ref
-  }
+  private lazy val underlyingActor = context watch context.actorOf(Reactor.UnderlyingActor.props(reactions))
 
   /**
    * send message via undeylyingActor.
    */
   def !(message: Any): Unit = underlyingActor ! message
   def tell(msg: Any, sender: ActorRef): Unit = underlyingActor.tell(msg, sender)
-  def forward(message: Any)(implicit context: ActorContext) = underlyingActor.forward(message)(context)
+  def forward(message: Any)(implicit context: ActorContext): Unit = underlyingActor.forward(message)(context)
 
   /** TODO **/
   def ?(msg: Any)(implicit timeout: Timeout): Future[Any] = ask(msg)(timeout)
-  def ask(msg: Any)(implicit timeout: Timeout): Future[Any] = {
-    akka.pattern.ask(underlyingActor, msg)(timeout)
-  }
+  def ask(msg: Any)(implicit timeout: Timeout): Future[Any] = akka.pattern.ask(underlyingActor, msg)(timeout)
 
   /**
    * Listen to the given publisher as long as <code>deafTo</code> isn't called for them.
